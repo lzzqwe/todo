@@ -32,6 +32,19 @@ export default {
 
 ```
 
+## 6 git操作
+
+```
+1.全局设置用户名和电子邮箱
+$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@example.com
+2.git init仓库的初始化
+  git add ./ 提交到暂存区
+  git commit -m '提交到仓库'
+  git remote add origin 设置仓库地址
+  git push -u origin master 推送到仓库
+```
+
 
 
 
