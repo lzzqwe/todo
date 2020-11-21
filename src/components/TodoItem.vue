@@ -3,13 +3,15 @@
       @mouseenter="handleEnter(true)"
       @mouseleave="handleEnter(false)"
       class="todo-item">
-    <input v-model="obj.complete" type="checkbox">
+    <input v-model="obj.complete" type="checkbox"/>
     <span class="text">{{obj.title}}</span>
-    <button @click="deleteItem(num)" v-show="isShow" class="btn">删除</button>
+    <button @click="_deleteItem(num)" v-show="isShow" class="btn">删除</button>
   </li>
 </template>
 
 <script>
+  import {mapMutations} from 'vuex'
+
   export default {
     name: 'TodoList',
     props:{
@@ -36,10 +38,12 @@
           this.isShow = false
         }
       },
-      deleteItem(index) {
-        this.$emit('deleteItem',index)
-      }
-    },
+      _deleteItem(index) {
+        window.confirm('确定要删除这个元素吗？')
+        this.$store.commit('deleteItem',{index})
+      },
+      ...mapMutations(['deleteItem'])
+    }
   }
 </script>
 

@@ -1,12 +1,17 @@
 <template>
   <div class="todo-header">
-    <input placeholder="请输入你的任务名称，按回车键确认" @keyup.enter="add" v-model="value" class="todo-header-input" type="text">
+    <input placeholder="请输入你的任务名称，按回车键确认"
+           @keyup.enter="add"
+           v-model="value"
+           class="todo-header-input"
+           type="text">
   </div>
 </template>
 
 <script>
+
 export default {
-  name: 'HelloWorld',
+  name: 'TodoHeader',
   data() {
     return {
       value:''
@@ -19,13 +24,14 @@ export default {
         alert('必须要输入才可以的')
         return
       }
-      const todo = {
+      let todo = {
         title:value,
         complete:false
       }
-      this.$emit('addTodo',todo)
+      console.log(todo)
+      this.$store.commit('addTodo',todo)
       this.value=''
-    }
+    },
   }
 }
 </script>

@@ -1,41 +1,37 @@
 <template>
     <div class="todo-list">
-      <ul v-if="this.list.length>0" class="border">
+      <ul v-if="list.length>0" class="border">
         <todo-item
           :obj="item"
           :num="index"
           :key="index"
           v-for="(item,index) in list"
-          @deleteItem="deleteItem"
         ></todo-item>
       </ul>
     </div>
 </template>
 
 <script>
+  import storage from '../common/js/storage'
   import TodoItem from './TodoItem'
+  import {mapState} from 'vuex'
   export default {
     name: 'TodoList',
     components:{
       TodoItem
     },
-    data() {
-      return {
-        bgColor:'white',
-        isShow:false
-      }
+    computed:{
+      ...mapState(['list'])
     },
-    methods:{
-      deleteItem(index) {
-        this.$emit('delete',index)
-      }
-    },
-    props:{
+    watch:{
       list:{
-        type:Array,
-        default:() =>([])
+        deep:true,
+        handler:function (newVal) {
+          console.log(newVal)
+          storage.save(newVal)
+        }
       }
-    },
+    }
   }
 </script>
 

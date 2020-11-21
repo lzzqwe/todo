@@ -1,8 +1,8 @@
 <template>
     <div class="todo-footer">
       <input v-model="checkAll" class="checkbox" type="checkbox">
-      <span>已完成{{ completeSize}}/全部{{ this.list.length  }}</span>
-      <button class="clear" v-show="completeSize" @click="delAll">清除已完成任务</button>
+      <span>已完成{{ $store.getters.completeSize}}/全部{{ $store.state.list.length  }}</span>
+      <button class="clear" v-show="$store.getters.completeSize" @click="delAll">清除已完成任务</button>
     </div>
 </template>
 
@@ -23,19 +23,16 @@
     },
     methods:{
       delAll() {
-        this.deleteAll()
+        this.$store.commit('deleteAll')
       }
     },
     computed:{
-      completeSize() {
-        return this.list.reduce((acc,cur) =>acc+(cur.complete?1:0) ,0 )
-      },
       checkAll: {
         get() {
-          return this.list.length === this.completeSize && this.completeSize >0
+         return this.$store.getters.isAllSelect
         },
-        set(value) {
-          this.selectAll(value)
+        set(isSelectAll) {
+          this.$store.commit('selectAll',isSelectAll)
         }
       }
     }
